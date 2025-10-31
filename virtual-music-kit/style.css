@@ -184,7 +184,6 @@ summary {
   display: flex;
   margin: 0 auto;
   max-width: 1440px;
-  justify-content: space-between;
   padding: 60px 20px;
 }
 
