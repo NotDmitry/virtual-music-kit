@@ -181,9 +181,11 @@ summary {
 }
 
 .guitar {
+  width: 100%;
   display: flex;
   flex-direction: row-reverse;
   flex-wrap: wrap;
+  align-items: center;
   row-gap: 40px;
   margin: 0 auto;
   max-width: 1440px;
@@ -192,15 +194,19 @@ summary {
 
 .guitar__head {
   width: 200px;
+  height: 300px;
   background-color: blueviolet;
 }
 
 .guitar__body {
-  width: 400px;
+  height: 300px;
+  width: 300px;
   background-color: coral;
 }
 
 .guitar__fret {
+  flex: 1;
+  max-width: 100px;
   display: flex;
   flex-direction: column;
   border: darkblue 2px solid;
