@@ -176,4 +176,37 @@ summary {
   display: list-item;
 }
 
+.container {
+  margin: 0 auto;
+}
+
+.guitar {
+  display: flex;
+  margin: 0 auto;
+  max-width: 1440px;
+  justify-content: space-between;
+  padding: 60px 20px;
+}
+
+.guitar__fret {
+  display: flex;
+  flex-direction: column;
+  border: darkblue 2px solid;
+}
+
+.guitar__key {
+  width: 100px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid darkslategray;
+  background-color: antiquewhite;
+}
+
+.guitar__string {
+  height: 5px;
+  background-color: darkolivegreen;
+}
+
 /*# sourceMappingURL=style.css.map */
