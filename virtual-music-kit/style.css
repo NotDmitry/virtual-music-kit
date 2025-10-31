@@ -176,16 +176,13 @@ summary {
   display: list-item;
 }
 
-.container {
-  margin: 0 auto;
-}
-
 .guitar {
   width: 100%;
   display: flex;
   flex-direction: row-reverse;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   row-gap: 40px;
   margin: 0 auto;
   max-width: 1440px;
