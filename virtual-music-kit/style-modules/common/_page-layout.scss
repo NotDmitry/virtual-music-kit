@@ -4,9 +4,22 @@
 
 .guitar {
   display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  row-gap: 40px;
   margin: 0 auto;
   max-width: 1440px;
   padding: 60px 20px;
+}
+
+.guitar__head {
+  width: 200px;
+  background-color: blueviolet;
+}
+
+.guitar__body {
+  width: 400px;
+  background-color: coral;
 }
 
 .guitar__fret {
