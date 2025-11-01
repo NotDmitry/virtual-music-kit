@@ -1,8 +1,12 @@
 const mainWrapper = document.createElement('main');
 document.body.append(mainWrapper);
 
+// Constants definition
 const FRETS = 7;
 const KEYS = 6;
+
+// Execution flow
+createGuitar();
 
 function createGuitar() {
   const guitar = document.createElement('div');
@@ -23,5 +27,3 @@ function createGuitar() {
 
   document.body.append(guitar);
 }
-
-createGuitar();
