@@ -211,7 +211,7 @@ summary {
   flex-direction: column;
   justify-content: center;
   border: 1px solid darkslategray;
-  background-color: antiquewhite;
+  background-color: grey;
   transition: 0.15s;
 }
 .guitar__key::after {
@@ -222,10 +222,14 @@ summary {
   right: -1px;
   background-color: darkolivegreen;
 }
-.guitar__key:hover {
+
+.guitar__key_active {
+  background-color: antiquewhite;
+}
+.guitar__key_active:hover {
   background-color: yellowgreen;
 }
-.guitar__key:hover::after {
+.guitar__key_active:hover::after {
   background-color: coral;
 }
 

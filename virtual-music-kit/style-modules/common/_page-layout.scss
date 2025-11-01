@@ -34,7 +34,7 @@ $key-border: 1px;
   flex-direction: column;
   justify-content: center;
   border: $key-border solid darkslategray;
-  background-color: antiquewhite;
+  background-color: grey;
   transition: 0.15s;
 
   &::after {
@@ -45,6 +45,10 @@ $key-border: 1px;
     right: -$key-border;
     background-color: darkolivegreen;
   }
+}
+
+.guitar__key_active {
+  background-color: antiquewhite;
 
   &:hover {
     background-color: yellowgreen;

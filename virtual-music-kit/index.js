@@ -7,7 +7,10 @@ const KEYS = 6;
 
 // Execution flow
 createGuitar();
+const activeKeys = Array.from(document.querySelectorAll('.guitar__key:last-of-type'));
+activeKeys.forEach(key => key.classList.add('guitar__key_active'));
 
+// Render the guitar
 function createGuitar() {
   const guitar = document.createElement('div');
   const guitarHead = document.createElement('div');
