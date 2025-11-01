@@ -49,12 +49,16 @@ $key-border: 1px;
 
 .guitar__key_active {
   background-color: antiquewhite;
-
+  
   &:hover {
     background-color: yellowgreen;
 
     &::after {
       background-color: coral;
     }
+  }
+
+  &:active {
+    background-color: yellow;
   }
 }
