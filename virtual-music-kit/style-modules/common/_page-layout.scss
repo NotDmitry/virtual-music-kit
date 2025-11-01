@@ -31,27 +31,32 @@
   border: darkblue 2px solid;
 }
 
+$key-border: 1px;
 .guitar__key {
+  position: relative;
   width: 100px;
   height: 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border: 1px solid darkslategray;
+  border: $key-border solid darkslategray;
   background-color: antiquewhite;
   transition: 0.15s;
+
+  &::after {
+    position: absolute;
+    content: '';
+    height: 5px;
+    left: -$key-border;
+    right: -$key-border;
+    background-color: darkolivegreen;
+  }
 
   &:hover {
     background-color: yellowgreen;
 
-    .guitar__string {
+    &::after {
       background-color: coral;
     }
   }
 }
-
-.guitar__string {
-  height: 5px;
-  background-color: darkolivegreen;
-}
-

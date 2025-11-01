@@ -9,17 +9,14 @@ function createGuitar() {
   const guitarHead = document.createElement('div');
   const guitarFret = document.createElement('div');
   const guitarKey = document.createElement('div');
-  const guitarString = document.createElement('span');
   const guitarBody = document.createElement('div');
 
   guitar.classList.add('guitar');
   guitarHead.classList.add('guitar__head');
   guitarFret.classList.add('guitar__fret');
   guitarKey.classList.add('guitar__key');
-  guitarString.classList.add('guitar__string');
   guitarBody.classList.add('guitar__body');
 
-  guitarKey.append(guitarString);
   const guitarKeys = Array.from({length: KEYS}, _ => guitarKey.cloneNode(true));
   guitarFret.append(...guitarKeys);
   const frets = Array.from({length: FRETS}, _ => guitarFret.cloneNode(true));
