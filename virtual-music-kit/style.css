@@ -195,12 +195,6 @@ summary {
   background-color: blueviolet;
 }
 
-.guitar__body {
-  height: 300px;
-  width: 300px;
-  background-color: coral;
-}
-
 .guitar__fret {
   flex: 1;
   max-width: 100px;
