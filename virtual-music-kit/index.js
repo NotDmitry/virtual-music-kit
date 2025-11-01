@@ -10,7 +10,9 @@ const KEYS = 6;
 // Execution flow
 createGuitar();
 const activeKeys = Array.from(document.querySelectorAll('.guitar__key:last-of-type'));
-const keyMap = new Map(activeKeys.map((key) => [key, new Key(null, null)]));
+const keyMap = new Map(activeKeys.map((key) => {
+  return [key, new Key(null, null, null)]
+}));
 activeKeys.forEach(key => key.classList.add('guitar__key_active'));
 
 // Render the guitar

@@ -1,6 +1,7 @@
 export class Key {
-  constructor(sound, key) {
+  constructor(sound, char, code) {
     this.sound = sound;
-    this.key = key;
+    this.keyChar = char;
+    this.keyCode = code;
   }
 }
