@@ -21,15 +21,25 @@ activeKeys.forEach((key) => {
   key.addEventListener('mouseout', (e) => keyRelease(e.target));
 })
 
+document.body.addEventListener('keydown', (e) => {
+  keyPress(activeKeys[0]);
+})
+
+document.body.addEventListener('keyup', (e) => {
+  keyRelease(activeKeys[0]);
+})
+
 // Controlling key state
 function keyPress(key) {
   key.classList.add('guitar__key_pressed');
   key.classList.remove('guitar__key_active');
+  key.focus();
 }
 
 function keyRelease(key) {
   key.classList.remove('guitar__key_pressed');
   key.classList.add('guitar__key_active');
+  key.blur();
 }
 
 // Render the guitar
