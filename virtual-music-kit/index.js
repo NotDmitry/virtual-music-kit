@@ -9,24 +9,25 @@ const KEYS = 6;
 
 // Execution flow
 createGuitar();
-const activeKeys = Array.from(document.querySelectorAll('.guitar__key:last-of-type'));
-const keyMap = new Map(activeKeys.map((key) => {
-  return [key, new Key(null, null, null)]
-}));
-activeKeys.forEach(key => key.classList.add('guitar__key_active'));
+const activeKeys = getActiveKeys();
+
 activeKeys.forEach((key) => {
-  key.disabled = false;
-  key.addEventListener('mousedown', (e) => keyPress(e.target));
-  key.addEventListener('mouseup', (e) => keyRelease(e.target));
-  key.addEventListener('mouseout', (e) => keyRelease(e.target));
+  key.keyElement.disabled = false;
+  key.keyElement.addEventListener('mousedown', (e) => keyPress(e.target));
+  key.keyElement.addEventListener('mouseup', (e) => keyRelease(e.target));
+  key.keyElement.addEventListener('mouseout', (e) => keyRelease(e.target));
 })
 
 document.body.addEventListener('keydown', (e) => {
-  keyPress(activeKeys[0]);
+  if (!e.repeat) {
+    const key = activeKeys.find((key) => key.keyCode === e.code);
+    if (key) keyPress(key.keyElement);
+  }
 })
 
 document.body.addEventListener('keyup', (e) => {
-  keyRelease(activeKeys[0]);
+  const key = activeKeys.find((key) => key.keyCode === e.code);
+  if (key) keyRelease(key.keyElement);
 })
 
 // Controlling key state
@@ -62,4 +63,18 @@ function createGuitar() {
   guitar.append(...frets);
 
   document.body.append(guitar);
+}
+
+// Create array of objects representing active keys
+function getActiveKeys() {
+  const assignedKeyChars = "LKJHGFD";
+  const assignedKeyCodes = assignedKeyChars.split("")
+    .map((char) => `Key${char}`);
+
+  const keys = Array.from(document.querySelectorAll('.guitar__key:last-of-type'));
+  keys.forEach((key) => key.classList.add('guitar__key_active'));
+
+  return keys.map((key, i) => {
+    return new Key(key, assignedKeyChars[i], assignedKeyCodes[i], null);
+  });
 }

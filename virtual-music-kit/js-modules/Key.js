@@ -1,7 +1,8 @@
 export class Key {
-  constructor(sound, char, code) {
+  constructor(keyElement, keyChar, keyCode, sound) {
+    this.keyElement = keyElement;
+    this.keyChar = keyChar;
+    this.keyCode = keyCode;
     this.sound = sound;
-    this.keyChar = char;
-    this.keyCode = code;
   }
 }
