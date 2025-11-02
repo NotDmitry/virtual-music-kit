@@ -15,6 +15,7 @@ const keyMap = new Map(activeKeys.map((key) => {
 }));
 activeKeys.forEach(key => key.classList.add('guitar__key_active'));
 activeKeys.forEach((key) => {
+  key.disabled = false;
   key.addEventListener('mousedown', (e) => keyPress(e.target));
   key.addEventListener('mouseup', (e) => keyRelease(e.target));
   key.addEventListener('mouseout', (e) => keyRelease(e.target));
@@ -36,7 +37,8 @@ function createGuitar() {
   const guitar = document.createElement('div');
   const guitarHead = document.createElement('div');
   const guitarFret = document.createElement('div');
-  const guitarKey = document.createElement('div');
+  const guitarKey = document.createElement('button');
+  guitarKey.disabled = true;
 
   guitar.classList.add('guitar');
   guitarHead.classList.add('guitar__head');
