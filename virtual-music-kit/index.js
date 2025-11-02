@@ -14,18 +14,22 @@ const keyMap = new Map(activeKeys.map((key) => {
   return [key, new Key(null, null, null)]
 }));
 activeKeys.forEach(key => key.classList.add('guitar__key_active'));
-activeKeys[0].addEventListener('mousedown', e => {
-  e.target.classList.remove('guitar__key_active');
-  e.target.classList.add('guitar__key_pressed');
-})
-activeKeys[0].addEventListener('mouseup', e => {
-  e.target.classList.remove('guitar__key_pressed');
-  e.target.classList.add('guitar__key_active');
+activeKeys.forEach((key) => {
+  key.addEventListener('mousedown', (e) => keyPress(e.target));
+  key.addEventListener('mouseup', (e) => keyRelease(e.target));
+  key.addEventListener('mouseout', (e) => keyRelease(e.target));
 })
 
-document.addEventListener('keydown', e => {
-  alert(e.target);
-})
+// Controlling key state
+function keyPress(key) {
+  key.classList.add('guitar__key_pressed');
+  key.classList.remove('guitar__key_active');
+}
+
+function keyRelease(key) {
+  key.classList.remove('guitar__key_pressed');
+  key.classList.add('guitar__key_active');
+}
 
 // Render the guitar
 function createGuitar() {
