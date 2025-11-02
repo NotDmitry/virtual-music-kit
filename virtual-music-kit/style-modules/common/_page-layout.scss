@@ -57,8 +57,12 @@ $key-border: 1px;
       background-color: coral;
     }
   }
+}
 
-  &:active {
-    background-color: yellow;
+.guitar__key_pressed {
+  background-color: yellow;
+
+  &::after {
+    background-color: red;
   }
 }

@@ -232,8 +232,12 @@ summary {
 .guitar__key_active:hover::after {
   background-color: coral;
 }
-.guitar__key_active:active {
+
+.guitar__key_pressed {
   background-color: yellow;
+}
+.guitar__key_pressed::after {
+  background-color: red;
 }
 
 /*# sourceMappingURL=style.css.map */
