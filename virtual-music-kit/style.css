@@ -227,7 +227,7 @@ summary {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border: 2px solid darkslategray;
+  border: 1px solid darkslategray;
   background-color: grey;
   transition: 0.15s;
 }
@@ -236,8 +236,8 @@ summary {
   z-index: 0;
   content: "";
   height: 5px;
-  left: -2px;
-  right: -2px;
+  left: -1px;
+  right: -1px;
   background-color: darkgoldenrod;
 }
 
