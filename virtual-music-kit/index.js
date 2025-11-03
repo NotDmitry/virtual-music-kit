@@ -48,15 +48,15 @@ let isAutoPlaying = false;
 // Mouse actions
 activeKeys.forEach((key) => {
   key.keyElement.disabled = false;
-  key.keyElement.addEventListener('mousedown', (e) => {
+  key.keyElement.addEventListener('mousedown', () => {
     if (isAutoPlaying) return;
     keyPress(key);
   });
-  key.keyElement.addEventListener('mouseup', (e) => {
+  key.keyElement.addEventListener('mouseup', () => {
     if (isAutoPlaying) return;
     keyRelease(key);
   });
-  key.keyElement.addEventListener('mouseout', (e) => {
+  key.keyElement.addEventListener('mouseout', () => {
     if (isAutoPlaying) return;
     keyRelease(key);
   });
@@ -137,7 +137,7 @@ document.body.addEventListener('keyup', (e) => {
 
 // Edit button actions
 editButtons.forEach((button) => {
-  button.addEventListener('click', (e) => {
+  button.addEventListener('click', () => {
     editInput.value = editKeysMap.get(button).keyChar;
     currentEditButton = button;
     modal.showModal();
@@ -154,7 +154,7 @@ editInput.addEventListener('paste', (e) => e.preventDefault())
 // Sequencer actions
 sequencerInput.addEventListener('paste', (e) => e.preventDefault());
 
-playButton.addEventListener('click', async (e) => {
+playButton.addEventListener('click', async () => {
   if (audioContext.state === 'suspended') {
     await audioContext.resume();
   }

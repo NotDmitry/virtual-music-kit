@@ -202,21 +202,32 @@ summary {
 }
 
 .guitar__fret {
+  position: relative;
   flex: 1;
   max-width: 150px;
   display: flex;
   flex-direction: column;
-  border: darkblue 2px solid;
+  justify-content: center;
+  align-items: center;
+}
+
+.guitar__fret:nth-child(2n+3):after {
+  content: "";
+  position: absolute;
+  background-color: silver;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
 }
 
 .guitar__key {
   position: relative;
-  width: 150px;
+  width: 120px;
   height: 60px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border: 1px solid darkslategray;
+  border: 2px solid darkslategray;
   background-color: grey;
   transition: 0.15s;
 }
@@ -225,26 +236,26 @@ summary {
   z-index: 0;
   content: "";
   height: 5px;
-  left: -1px;
-  right: -1px;
-  background-color: darkolivegreen;
+  left: -2px;
+  right: -2px;
+  background-color: darkgoldenrod;
 }
 
 .guitar__key_active {
-  background-color: antiquewhite;
+  background-color: #452a20;
 }
 .guitar__key_active:hover {
-  background-color: yellowgreen;
+  background-color: #8d6b28;
 }
 .guitar__key_active:hover::after {
   background-color: coral;
 }
 
 .guitar__key_pressed {
-  background-color: yellow;
+  background-color: #bec030;
 }
 .guitar__key_pressed::after {
-  background-color: red;
+  background-color: #9d3d19;
 }
 
 .guitar__label {
@@ -252,7 +263,7 @@ summary {
   z-index: 1;
   pointer-events: none;
   font-size: 32px;
-  color: blue;
+  color: greenyellow;
   font-weight: 500;
 }
 
