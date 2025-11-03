@@ -1,16 +1,19 @@
 import {Key} from "./js-modules/Key.js";
 
-const mainWrapper = document.createElement('main');
-document.body.append(mainWrapper);
-
 // Constants definition
 const FRETS = 7;
 const KEYS = 6;
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 // Execution flow
-createGuitar();
+const mainWrapper = document.createElement('main');
+const guitar = createGuitar();
 const modal = createModal();
+
+mainWrapper.append(guitar);
+mainWrapper.append(modal);
+document.body.append(mainWrapper);
+
 const activeKeys = getActiveKeys();
 const editButtons = Array.from(document.querySelectorAll('.guitar__edit'));
 const editInput = document.getElementById('edit-input');
@@ -131,7 +134,7 @@ function createGuitar() {
   guitar.append(guitarHead);
   guitar.append(...frets);
 
-  document.body.append(guitar);
+  return guitar;
 }
 
 // Create modal window
@@ -158,7 +161,6 @@ function createModal() {
   modalBody.append(modalInput);
   modal.append(modalBody);
 
-  document.body.append(modal);
   return modal;
 }
 
