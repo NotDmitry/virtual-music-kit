@@ -43,17 +43,32 @@ let currentEditButton = null;
 let lastInputCode = null;
 let lastFocusedElement = document.activeElement;
 let oscillator = null;
+let isAutoPlaying = false;
 
 // Mouse actions
 activeKeys.forEach((key) => {
   key.keyElement.disabled = false;
-  key.keyElement.addEventListener('mousedown', (e) => keyPress(e.target));
-  key.keyElement.addEventListener('mouseup', (e) => keyRelease(e.target));
-  key.keyElement.addEventListener('mouseout', (e) => keyRelease(e.target));
+  key.keyElement.addEventListener('mousedown', (e) => {
+    if (isAutoPlaying) return;
+    keyPress(key);
+  });
+  key.keyElement.addEventListener('mouseup', (e) => {
+    if (isAutoPlaying) return;
+    keyRelease(key);
+  });
+  key.keyElement.addEventListener('mouseout', (e) => {
+    if (isAutoPlaying) return;
+    keyRelease(key);
+  });
 })
 
 // Keyboard actions
 document.body.addEventListener('keydown', (e) => {
+  if (isAutoPlaying) {
+    e.preventDefault();
+    return;
+  }
+
   if (e.target === editInput) {
     if (e.key === 'Enter') {
       const currentKey = editKeysMap.get(currentEditButton);
@@ -106,13 +121,18 @@ document.body.addEventListener('keydown', (e) => {
 
   if (!e.repeat) {
     const key = activeKeys.find((key) => key.keyCode === e.code);
-    if (key) keyPress(key.keyElement);
+    if (key) {
+      keyPress(key);
+    }
   }
 })
 
 document.body.addEventListener('keyup', (e) => {
+  if (isAutoPlaying) return;
   const key = activeKeys.find((key) => key.keyCode === e.code);
-  if (key) keyRelease(key.keyElement);
+  if (key) {
+    keyRelease(key);
+  }
 })
 
 // Edit button actions
@@ -134,40 +154,66 @@ editInput.addEventListener('paste', (e) => e.preventDefault())
 // Sequencer actions
 sequencerInput.addEventListener('paste', (e) => e.preventDefault());
 
+playButton.addEventListener('click', async (e) => {
+  if (audioContext.state === 'suspended') {
+    await audioContext.resume();
+  }
+
+  const duration = 500;
+  const delay = 350;
+  isAutoPlaying = true;
+
+  const notes = sequencerInput.value.split('');
+  for (const note of notes) {
+    if (note) {
+      const key = activeKeys.find((key) => key.keyChar === note);
+      keyPress(key);
+      await sleep(duration);
+      keyRelease(key);
+      await sleep(delay);
+    }
+  }
+
+  isAutoPlaying = false;
+})
+
 // Controlling key state
-function keyPress(key) {
+function keyPress(key, time = 0) {
   if (!pressedKey) {
     pressedKey = key;
-    key.classList.add('guitar__key_pressed');
-    key.classList.remove('guitar__key_active');
-    key.focus();
+    key.keyElement.classList.add('guitar__key_pressed');
+    key.keyElement.classList.remove('guitar__key_active');
+    key.keyElement.focus();
 
     if (audioContext.state === 'suspended') {
       audioContext.resume();
     }
 
-    const keyObject = activeKeys.find((keyObj) => keyObj.keyElement === key);
-    oscillator = playSound(keyObject.sound);
+    oscillator = playSound(key.sound, time);
   }
 }
 
-function keyRelease(key) {
+function keyRelease(key, time = 0) {
   if (key === pressedKey) {
-    oscillator.stop();
+    oscillator.stop(time);
     pressedKey = null;
-    key.classList.remove('guitar__key_pressed');
-    key.classList.add('guitar__key_active');
-    key.blur();
+    key.keyElement.classList.remove('guitar__key_pressed');
+    key.keyElement.classList.add('guitar__key_active');
+    key.keyElement.blur();
     lastFocusedElement.focus();
   }
 }
 
-function playSound(freq) {
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function playSound(freq, time = 0) {
   const osc = audioContext.createOscillator();
   osc.type = 'triangle';
   osc.frequency.value = freq;
   osc.connect(audioContext.destination);
-  osc.start();
+  osc.start(time);
   return osc;
 }
 
