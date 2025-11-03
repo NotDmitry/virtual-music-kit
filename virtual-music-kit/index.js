@@ -15,6 +15,7 @@ const CONTROL_KEYS = [
   'CONTROL',
   'ENTER'
 ];
+const audioContext = new AudioContext();
 
 // Execution flow
 const mainWrapper = document.createElement('main');
@@ -41,6 +42,7 @@ let pressedKey = null;
 let currentEditButton = null;
 let lastInputCode = null;
 let lastFocusedElement = document.activeElement;
+let oscillator = null;
 
 // Mouse actions
 activeKeys.forEach((key) => {
@@ -139,17 +141,34 @@ function keyPress(key) {
     key.classList.add('guitar__key_pressed');
     key.classList.remove('guitar__key_active');
     key.focus();
+
+    if (audioContext.state === 'suspended') {
+      audioContext.resume();
+    }
+
+    const keyObject = activeKeys.find((keyObj) => keyObj.keyElement === key);
+    oscillator = playSound(keyObject.sound);
   }
 }
 
 function keyRelease(key) {
   if (key === pressedKey) {
+    oscillator.stop();
     pressedKey = null;
     key.classList.remove('guitar__key_pressed');
     key.classList.add('guitar__key_active');
     key.blur();
     lastFocusedElement.focus();
   }
+}
+
+function playSound(freq) {
+  const osc = audioContext.createOscillator();
+  osc.type = 'triangle';
+  osc.frequency.value = freq;
+  osc.connect(audioContext.destination);
+  osc.start();
+  return osc;
 }
 
 // Render the guitar
@@ -230,6 +249,7 @@ function createSequencer(maxSequenceLength) {
 // Create array of objects representing active keys
 function getActiveKeys(guitar) {
   const assignedKeyChars = "LKJHGFD";
+  const frequencies = [349.23, 369.99, 392.00, 415.30, 440.00, 466.16, 493.88];
   const assignedKeyCodes = assignedKeyChars.split("")
     .map((char) => `Key${char}`);
 
@@ -247,6 +267,6 @@ function getActiveKeys(guitar) {
     span.textContent = `${assignedKeyChars[i]}`;
     key.append(span);
     key.append(img.cloneNode(true));
-    return new Key(key, assignedKeyChars[i], assignedKeyCodes[i], null);
+    return new Key(key, assignedKeyChars[i], assignedKeyCodes[i], frequencies[i]);
   });
 }
