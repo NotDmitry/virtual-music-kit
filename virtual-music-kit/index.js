@@ -154,7 +154,7 @@ function createModal() {
   modalInput.type = 'text';
   modalInput.maxLength = 1;
   modalInput.value = 'X';
-  modalLabel.for = modalInput.id;
+  modalLabel.htmlFor = modalInput.id;
 
   modalLabel.append(modalText);
   modalBody.append(modalLabel);
