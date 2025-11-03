@@ -10,6 +10,7 @@ const KEYS = 6;
 // Execution flow
 createGuitar();
 const modal = createModal();
+const editInput = document.getElementById('edit-input');
 const activeKeys = getActiveKeys();
 let pressedKey = null;
 
@@ -23,6 +24,13 @@ activeKeys.forEach((key) => {
 
 // Keyboard actions
 document.body.addEventListener('keydown', (e) => {
+  if (e.target === editInput) {
+    if (e.key === 'Enter') {
+      modal.close();
+    }
+    return;
+  }
+
   if (!e.repeat) {
     const key = activeKeys.find((key) => key.keyCode === e.code);
     if (key) keyPress(key.keyElement);
