@@ -9,9 +9,11 @@ const KEYS = 6;
 
 // Execution flow
 createGuitar();
+const modal = createModal();
 const activeKeys = getActiveKeys();
 let pressedKey = null;
 
+// Mouse actions
 activeKeys.forEach((key) => {
   key.keyElement.disabled = false;
   key.keyElement.addEventListener('mousedown', (e) => keyPress(e.target));
@@ -19,6 +21,7 @@ activeKeys.forEach((key) => {
   key.keyElement.addEventListener('mouseout', (e) => keyRelease(e.target));
 })
 
+// Keyboard actions
 document.body.addEventListener('keydown', (e) => {
   if (!e.repeat) {
     const key = activeKeys.find((key) => key.keyCode === e.code);
@@ -30,6 +33,17 @@ document.body.addEventListener('keyup', (e) => {
   const key = activeKeys.find((key) => key.keyCode === e.code);
   if (key) keyRelease(key.keyElement);
 })
+
+// Modal window actions
+const editButtons = document.querySelectorAll('.guitar__edit');
+editButtons.forEach((button) => {
+  button.addEventListener('click', (e) => modal.showModal())
+})
+
+modal.addEventListener('click', (e) => {
+  if (e.target.contains(modal)) modal.close();
+})
+
 
 // Controlling key state
 function keyPress(key) {
@@ -70,6 +84,33 @@ function createGuitar() {
   guitar.append(...frets);
 
   document.body.append(guitar);
+}
+
+// Create modal window
+function createModal() {
+  const modal = document.createElement('dialog');
+  const modalBody = document.createElement('div');
+  const modalLabel = document.createElement('label');
+  const modalText = document.createTextNode('Edit key binding');
+  const modalInput = document.createElement('input');
+
+  modal.classList.add('modal');
+  modalBody.classList.add('modal__inner');
+  modalLabel.classList.add('modal__label');
+  modalInput.classList.add('modal__edit');
+
+  modalInput.id = 'edit-input';
+  modalInput.type = 'text';
+  modalInput.value = 'X';
+  modalLabel.for = modalInput.id;
+
+  modalLabel.append(modalText);
+  modalBody.append(modalLabel);
+  modalBody.append(modalInput);
+  modal.append(modalBody);
+
+  document.body.append(modal);
+  return modal;
 }
 
 // Create array of objects representing active keys

@@ -252,4 +252,23 @@ summary {
   background-color: yellow;
 }
 
+.modal {
+  padding: 0;
+  max-width: 240px;
+  width: calc(100% - 40px);
+  border: none;
+}
+.modal::backdrop {
+  background: rgba(34, 34, 34, 0.6);
+}
+
+.modal__inner {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
 /*# sourceMappingURL=style.css.map */
