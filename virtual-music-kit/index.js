@@ -4,6 +4,17 @@ import {Key} from "./js-modules/Key.js";
 const FRETS = 7;
 const KEYS = 6;
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const CONTROL_KEYS = [
+  'ARROWLEFT',
+  'ARROWRIGHT',
+  'BACKSPACE',
+  'DELETE',
+  'SHIFT',
+  'ALT',
+  'CAPSLOCK',
+  'CONTROL',
+  'ENTER'
+];
 
 // Execution flow
 const mainWrapper = document.createElement('main');
@@ -69,6 +80,20 @@ document.body.addEventListener('keydown', (e) => {
     }
 
     lastInputCode = e.code;
+    return;
+  }
+
+  if (e.target === sequencerInput) {
+    const assignedKeys = activeKeys.map((key) => key.keyChar)
+    const currentChar = e.key.toUpperCase();
+
+    if (CONTROL_KEYS.includes(currentChar)) return;
+
+    if (!assignedKeys.includes(currentChar)) {
+      e.preventDefault();
+      alert('Invalid character input prevented! Please use ASSIGNED English letter keys.')
+    }
+
     return;
   }
 
