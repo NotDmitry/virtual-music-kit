@@ -10,6 +10,7 @@ const KEYS = 6;
 // Execution flow
 createGuitar();
 const activeKeys = getActiveKeys();
+let pressedKey = null;
 
 activeKeys.forEach((key) => {
   key.keyElement.disabled = false;
@@ -32,15 +33,21 @@ document.body.addEventListener('keyup', (e) => {
 
 // Controlling key state
 function keyPress(key) {
-  key.classList.add('guitar__key_pressed');
-  key.classList.remove('guitar__key_active');
-  key.focus();
+  if (!pressedKey) {
+    pressedKey = key;
+    key.classList.add('guitar__key_pressed');
+    key.classList.remove('guitar__key_active');
+    key.focus();
+  }
 }
 
 function keyRelease(key) {
-  key.classList.remove('guitar__key_pressed');
-  key.classList.add('guitar__key_active');
-  key.blur();
+  if (key === pressedKey) {
+    pressedKey = null;
+    key.classList.remove('guitar__key_pressed');
+    key.classList.add('guitar__key_active');
+    key.blur();
+  }
 }
 
 // Render the guitar
