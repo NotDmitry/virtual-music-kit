@@ -7,14 +7,17 @@ const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 // Execution flow
 const mainWrapper = document.createElement('main');
+mainWrapper.classList.add('page');
 const guitar = createGuitar();
 const modal = createModal();
+const activeKeys = getActiveKeys(guitar);
+const sequencer = createSequencer(activeKeys.length * 2);
 
 mainWrapper.append(guitar);
 mainWrapper.append(modal);
+mainWrapper.append(sequencer);
 document.body.append(mainWrapper);
 
-const activeKeys = getActiveKeys();
 const editButtons = Array.from(document.querySelectorAll('.guitar__edit'));
 const editInput = document.getElementById('edit-input');
 const editKeysMap = new Map(
@@ -164,13 +167,39 @@ function createModal() {
   return modal;
 }
 
+// Create sequencer
+function createSequencer(maxSequenceLength) {
+  const sequencer = document.createElement('div');
+  const sequencerLabel = document.createElement('label');
+  const sequencerInput = document.createElement('input');
+  const sequencerPlayBtn = document.createElement('button');
+
+  sequencer.classList.add('sequencer');
+  sequencerLabel.classList.add('sequencer__label');
+  sequencerInput.classList.add('sequencer__input');
+  sequencerPlayBtn.classList.add('sequencer__btn');
+
+  sequencerInput.id = 'sequence-input';
+  sequencerInput.type = 'text';
+  sequencerInput.maxLength = maxSequenceLength;
+  sequencerLabel.htmlFor = sequencerInput.id;
+
+  sequencerPlayBtn.append(document.createTextNode('Let\'s rock!'));
+  sequencerLabel.append(document.createTextNode('Enter the sequence for autoplay'));
+  sequencer.append(sequencerLabel);
+  sequencer.append(sequencerInput);
+  sequencer.append(sequencerPlayBtn);
+
+  return sequencer;
+}
+
 // Create array of objects representing active keys
-function getActiveKeys() {
+function getActiveKeys(guitar) {
   const assignedKeyChars = "LKJHGFD";
   const assignedKeyCodes = assignedKeyChars.split("")
     .map((char) => `Key${char}`);
 
-  const keys = Array.from(document.querySelectorAll('.guitar__key:last-of-type'));
+  const keys = Array.from(guitar.querySelectorAll('.guitar__key:last-of-type'));
   const img = document.createElement('img');
   img.classList.add('guitar__edit');
   img.src = './assets/svg/edit.svg';

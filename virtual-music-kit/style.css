@@ -176,17 +176,23 @@ summary {
   display: list-item;
 }
 
-.guitar {
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  max-width: 1440px;
   width: 100%;
+}
+
+.guitar {
   display: flex;
   flex-direction: row-reverse;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
   row-gap: 40px;
-  margin: 0 auto;
-  max-width: 1440px;
-  padding: 60px 20px;
 }
 
 .guitar__head {
@@ -279,6 +285,28 @@ summary {
   justify-content: space-between;
   align-items: center;
   gap: 10px;
+}
+
+.sequencer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 15px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.sequencer__label {
+  font-size: 28px;
+  font-weight: 400;
+}
+
+.sequencer__input {
+  font-size: 20px;
+}
+
+.sequencer__btn {
+  font-size: 24px;
 }
 
 /*# sourceMappingURL=style.css.map */
