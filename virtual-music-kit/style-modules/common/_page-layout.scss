@@ -19,7 +19,7 @@
 
 .guitar__fret {
   flex: 1;
-  max-width: 100px;
+  max-width: 150px;
   display: flex;
   flex-direction: column;
   border: darkblue 2px solid;
@@ -28,8 +28,8 @@
 $key-border: 1px;
 .guitar__key {
   position: relative;
-  width: 100px;
-  height: 40px;
+  width: 150px;
+  height: 60px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -64,5 +64,18 @@ $key-border: 1px;
 
   &::after {
     background-color: red;
+  }
+}
+
+.guitar__edit {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: aliceblue;
+
+  &:hover {
+    background-color: yellow;
   }
 }

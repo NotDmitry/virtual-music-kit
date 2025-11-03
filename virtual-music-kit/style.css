@@ -197,7 +197,7 @@ summary {
 
 .guitar__fret {
   flex: 1;
-  max-width: 100px;
+  max-width: 150px;
   display: flex;
   flex-direction: column;
   border: darkblue 2px solid;
@@ -205,8 +205,8 @@ summary {
 
 .guitar__key {
   position: relative;
-  width: 100px;
-  height: 40px;
+  width: 150px;
+  height: 60px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -238,6 +238,18 @@ summary {
 }
 .guitar__key_pressed::after {
   background-color: red;
+}
+
+.guitar__edit {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: aliceblue;
+}
+.guitar__edit:hover {
+  background-color: yellow;
 }
 
 /*# sourceMappingURL=style.css.map */
