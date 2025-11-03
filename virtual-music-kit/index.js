@@ -264,6 +264,7 @@ function createModal() {
   modalInput.type = 'text';
   modalInput.maxLength = 1;
   modalInput.value = 'X';
+  modalInput.autocomplete = 'off';
   modalLabel.htmlFor = modalInput.id;
 
   modalLabel.append(modalText);
@@ -289,6 +290,7 @@ function createSequencer(maxSequenceLength) {
   sequencerInput.id = 'sequencer-input';
   sequencerInput.type = 'text';
   sequencerInput.maxLength = maxSequenceLength;
+  sequencerInput.autocomplete = 'off';
   sequencerLabel.htmlFor = sequencerInput.id;
 
   sequencerPlayBtn.append(document.createTextNode('Let\'s rock!'));
