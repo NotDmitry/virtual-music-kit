@@ -20,6 +20,8 @@ document.body.append(mainWrapper);
 
 const editButtons = Array.from(document.querySelectorAll('.guitar__edit'));
 const editInput = document.getElementById('edit-input');
+const sequencerInput = document.getElementById('sequencer-input');
+const playButton = document.querySelector('.sequencer__btn');
 const editKeysMap = new Map(
   editButtons.map((button, i) => [button, activeKeys[i]])
 );
@@ -95,9 +97,10 @@ modal.addEventListener('click', (e) => {
   if (e.target.contains(modal)) modal.close();
 })
 
-editInput.addEventListener('paste', (e) => {
-  e.preventDefault();
-})
+editInput.addEventListener('paste', (e) => e.preventDefault())
+
+// Sequencer actions
+sequencerInput.addEventListener('paste', (e) => e.preventDefault());
 
 // Controlling key state
 function keyPress(key) {
@@ -179,7 +182,7 @@ function createSequencer(maxSequenceLength) {
   sequencerInput.classList.add('sequencer__input');
   sequencerPlayBtn.classList.add('sequencer__btn');
 
-  sequencerInput.id = 'sequence-input';
+  sequencerInput.id = 'sequencer-input';
   sequencerInput.type = 'text';
   sequencerInput.maxLength = maxSequenceLength;
   sequencerLabel.htmlFor = sequencerInput.id;
