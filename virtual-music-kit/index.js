@@ -40,6 +40,7 @@ const editKeysMap = new Map(
 let pressedKey = null;
 let currentEditButton = null;
 let lastInputCode = null;
+let lastFocusedElement = document.activeElement;
 
 // Mouse actions
 activeKeys.forEach((key) => {
@@ -84,6 +85,7 @@ document.body.addEventListener('keydown', (e) => {
   }
 
   if (e.target === sequencerInput) {
+    lastFocusedElement = sequencerInput;
     const assignedKeys = activeKeys.map((key) => key.keyChar)
     const currentChar = e.key.toUpperCase();
 
@@ -91,10 +93,13 @@ document.body.addEventListener('keydown', (e) => {
 
     if (!assignedKeys.includes(currentChar)) {
       e.preventDefault();
-      alert('Invalid character input prevented! Please use ASSIGNED English letter keys.')
+      alert('Invalid character input prevented! Please use ASSIGNED English letter keys.');
+      return;
     }
 
-    return;
+    if (sequencerInput.value.length < sequencerInput.maxLength) {
+      sequencerInput.value += e.key;
+    }
   }
 
   if (!e.repeat) {
@@ -143,6 +148,7 @@ function keyRelease(key) {
     key.classList.remove('guitar__key_pressed');
     key.classList.add('guitar__key_active');
     key.blur();
+    lastFocusedElement.focus();
   }
 }
 
