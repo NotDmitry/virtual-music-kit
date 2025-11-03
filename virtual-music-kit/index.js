@@ -170,7 +170,7 @@ playButton.addEventListener('click', async () => {
   isAutoPlaying = true;
   sequencerInput.disabled = true;
   playButton.disabled = true;
-  const notes = sequencerInput.value.split('');
+  const notes = sequencerInput.value.toUpperCase().split('');
   for (const note of notes) {
     if (note) {
       const key = activeKeys.find((key) => key.keyChar === note);
