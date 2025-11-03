@@ -41,7 +41,6 @@ const editKeysMap = new Map(
 let pressedKey = null;
 let currentEditButton = null;
 let lastInputCode = null;
-let lastFocusedElement = document.activeElement;
 let oscillator = null;
 let isAutoPlaying = false;
 
@@ -102,7 +101,6 @@ document.body.addEventListener('keydown', (e) => {
   }
 
   if (e.target === sequencerInput) {
-    lastFocusedElement = sequencerInput;
     const assignedKeys = activeKeys.map((key) => key.keyChar)
     const currentChar = e.key.toUpperCase();
 
@@ -114,9 +112,10 @@ document.body.addEventListener('keydown', (e) => {
       return;
     }
 
-    if (sequencerInput.value.length < sequencerInput.maxLength) {
-      sequencerInput.value += e.key;
-    }
+    const key = activeKeys.find((key) => key.keyCode === e.code);
+    keyPress(key);
+    sequencerInput.focus();
+    return;
   }
 
   if (!e.repeat) {
@@ -158,6 +157,7 @@ sequencerInput.addEventListener('paste', (e) => {
   e.preventDefault()
 });
 
+
 playButton.addEventListener('click', async () => {
   if (isAutoPlaying) return;
 
@@ -168,7 +168,8 @@ playButton.addEventListener('click', async () => {
   const duration = 500;
   const delay = 350;
   isAutoPlaying = true;
-
+  sequencerInput.disabled = true;
+  playButton.disabled = true;
   const notes = sequencerInput.value.split('');
   for (const note of notes) {
     if (note) {
@@ -181,6 +182,8 @@ playButton.addEventListener('click', async () => {
   }
 
   isAutoPlaying = false;
+  sequencerInput.disabled = false;
+  playButton.disabled = false;
 })
 
 // Controlling key state
@@ -206,7 +209,6 @@ function keyRelease(key, time = 0) {
     key.keyElement.classList.remove('guitar__key_pressed');
     key.keyElement.classList.add('guitar__key_active');
     key.keyElement.blur();
-    lastFocusedElement.focus();
   }
 }
 
