@@ -138,6 +138,7 @@ document.body.addEventListener('keyup', (e) => {
 // Edit button actions
 editButtons.forEach((button) => {
   button.addEventListener('click', () => {
+    if (isAutoPlaying) return;
     editInput.value = editKeysMap.get(button).keyChar;
     currentEditButton = button;
     modal.showModal();
@@ -152,9 +153,14 @@ modal.addEventListener('click', (e) => {
 editInput.addEventListener('paste', (e) => e.preventDefault())
 
 // Sequencer actions
-sequencerInput.addEventListener('paste', (e) => e.preventDefault());
+sequencerInput.addEventListener('paste', (e) => {
+  if (isAutoPlaying) return;
+  e.preventDefault()
+});
 
 playButton.addEventListener('click', async () => {
+  if (isAutoPlaying) return;
+
   if (audioContext.state === 'suspended') {
     await audioContext.resume();
   }
