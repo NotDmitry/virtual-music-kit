@@ -216,6 +216,7 @@ summary {
 }
 .guitar__key::after {
   position: absolute;
+  z-index: 0;
   content: "";
   height: 5px;
   left: -1px;
@@ -238,6 +239,15 @@ summary {
 }
 .guitar__key_pressed::after {
   background-color: red;
+}
+
+.guitar__label {
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+  font-size: 32px;
+  color: blue;
+  font-weight: 500;
 }
 
 .guitar__edit {

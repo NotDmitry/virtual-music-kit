@@ -127,18 +127,20 @@ function getActiveKeys() {
   const assignedKeyCodes = assignedKeyChars.split("")
     .map((char) => `Key${char}`);
 
+  const keys = Array.from(document.querySelectorAll('.guitar__key:last-of-type'));
   const img = document.createElement('img');
   img.classList.add('guitar__edit');
   img.src = './assets/svg/edit.svg';
   img.alt = 'Select guitar key binding';
-
-  const keys = Array.from(document.querySelectorAll('.guitar__key:last-of-type'));
-  keys.forEach((key) => {
-    key.classList.add('guitar__key_active');
-    key.append(img.cloneNode(true));
-  });
+  const label = document.createElement('span');
+  label.classList.add('guitar__label');
 
   return keys.map((key, i) => {
+    key.classList.add('guitar__key_active');
+    const span = label.cloneNode(true);
+    span.textContent = `${assignedKeyChars[i]}`;
+    key.append(span);
+    key.append(img.cloneNode(true));
     return new Key(key, assignedKeyChars[i], assignedKeyCodes[i], null);
   });
 }
