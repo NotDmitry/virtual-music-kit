@@ -6,13 +6,21 @@ document.body.append(mainWrapper);
 // Constants definition
 const FRETS = 7;
 const KEYS = 6;
+const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 // Execution flow
 createGuitar();
 const modal = createModal();
-const editInput = document.getElementById('edit-input');
 const activeKeys = getActiveKeys();
+const editButtons = Array.from(document.querySelectorAll('.guitar__edit'));
+const editInput = document.getElementById('edit-input');
+const editKeysMap = new Map(
+  editButtons.map((button, i) => [button, activeKeys[i]])
+);
+
 let pressedKey = null;
+let currentEditButton = null;
+let lastInputCode = null;
 
 // Mouse actions
 activeKeys.forEach((key) => {
@@ -26,8 +34,33 @@ activeKeys.forEach((key) => {
 document.body.addEventListener('keydown', (e) => {
   if (e.target === editInput) {
     if (e.key === 'Enter') {
+      const currentKey = editKeysMap.get(currentEditButton);
+      const currentValue = editInput.value.toUpperCase();
+      const assignedKeys = activeKeys.map((key) => key.keyChar)
+
+      if (assignedKeys.includes(currentValue)) {
+        alert('The key is already assigned!');
+        return;
+      }
+
+      if (!currentValue) {
+        alert('Empty value is not allowed!');
+        return;
+      }
+
+      if (!ALPHABET.includes(currentValue)) {
+        alert('Not a valid key! Please use one English letter key.');
+        return;
+      }
+
+      currentKey.keyChar = currentValue;
+      const label = currentKey.keyElement.querySelector('.guitar__label');
+      label.textContent = `${currentKey.keyChar}`;
+      if (lastInputCode) currentKey.keyCode = lastInputCode;
       modal.close();
     }
+
+    lastInputCode = e.code;
     return;
   }
 
@@ -43,10 +76,10 @@ document.body.addEventListener('keyup', (e) => {
 })
 
 // Edit button actions
-const editButtons = document.querySelectorAll('.guitar__edit');
-editButtons.forEach((button, i) => {
+editButtons.forEach((button) => {
   button.addEventListener('click', (e) => {
-    editInput.value = activeKeys[i].keyChar;
+    editInput.value = editKeysMap.get(button).keyChar;
+    currentEditButton = button;
     modal.showModal();
   })
 })
@@ -54,6 +87,10 @@ editButtons.forEach((button, i) => {
 // Modal window actions
 modal.addEventListener('click', (e) => {
   if (e.target.contains(modal)) modal.close();
+})
+
+editInput.addEventListener('paste', (e) => {
+  e.preventDefault();
 })
 
 // Controlling key state
