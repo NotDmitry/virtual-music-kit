@@ -42,16 +42,19 @@ document.body.addEventListener('keyup', (e) => {
   if (key) keyRelease(key.keyElement);
 })
 
-// Modal window actions
+// Edit button actions
 const editButtons = document.querySelectorAll('.guitar__edit');
-editButtons.forEach((button) => {
-  button.addEventListener('click', (e) => modal.showModal())
+editButtons.forEach((button, i) => {
+  button.addEventListener('click', (e) => {
+    editInput.value = activeKeys[i].keyChar;
+    modal.showModal();
+  })
 })
 
+// Modal window actions
 modal.addEventListener('click', (e) => {
   if (e.target.contains(modal)) modal.close();
 })
-
 
 // Controlling key state
 function keyPress(key) {
@@ -109,6 +112,7 @@ function createModal() {
 
   modalInput.id = 'edit-input';
   modalInput.type = 'text';
+  modalInput.maxLength = 1;
   modalInput.value = 'X';
   modalLabel.for = modalInput.id;
 
