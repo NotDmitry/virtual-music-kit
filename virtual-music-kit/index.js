@@ -238,6 +238,7 @@ function createGuitar() {
   guitarFret.classList.add('guitar__fret');
   guitarKey.classList.add('guitar__key');
 
+  guitarHead.append(document.createTextNode('Guitar Head: Work in progress :/ sorry'));
   const guitarKeys = Array.from({length: KEYS}, _ => guitarKey.cloneNode(true));
   guitarFret.append(...guitarKeys);
   const frets = Array.from({length: FRETS}, _ => guitarFret.cloneNode(true));
