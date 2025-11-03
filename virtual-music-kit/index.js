@@ -49,7 +49,7 @@ activeKeys.forEach((key) => {
   key.keyElement.disabled = false;
   key.keyElement.addEventListener('mousedown', () => {
     if (isAutoPlaying) return;
-    keyPress(key);
+    keyPress(key, audioContext.currentTime + 1);
   });
   key.keyElement.addEventListener('mouseup', () => {
     if (isAutoPlaying) return;
@@ -113,7 +113,7 @@ document.body.addEventListener('keydown', (e) => {
     }
 
     const key = activeKeys.find((key) => key.keyCode === e.code);
-    keyPress(key);
+    keyPress(key, audioContext.currentTime + 0.5);
     sequencerInput.focus();
     return;
   }
@@ -121,7 +121,7 @@ document.body.addEventListener('keydown', (e) => {
   if (!e.repeat) {
     const key = activeKeys.find((key) => key.keyCode === e.code);
     if (key) {
-      keyPress(key);
+      keyPress(key, audioContext.currentTime + 0.5);
     }
   }
 })
@@ -165,7 +165,7 @@ playButton.addEventListener('click', async () => {
     await audioContext.resume();
   }
 
-  const duration = 500;
+  const duration = 0.5;
   const delay = 350;
   isAutoPlaying = true;
   sequencerInput.disabled = true;
@@ -174,8 +174,8 @@ playButton.addEventListener('click', async () => {
   for (const note of notes) {
     if (note) {
       const key = activeKeys.find((key) => key.keyChar === note);
-      keyPress(key);
-      await sleep(duration);
+      keyPress(key, audioContext.currentTime + duration);
+      await sleep(duration * 1000);
       keyRelease(key);
       await sleep(delay);
     }
@@ -198,13 +198,16 @@ function keyPress(key, time = 0) {
       audioContext.resume();
     }
 
-    oscillator = playSound(key.sound, time);
+    if (audioContext.state === 'running') {
+      oscillator.stop();
+    }
+    oscillator = playSound(key.sound);
+    oscillator.stop(time);
   }
 }
 
-function keyRelease(key, time = 0) {
+function keyRelease(key) {
   if (key === pressedKey) {
-    oscillator.stop(time);
     pressedKey = null;
     key.keyElement.classList.remove('guitar__key_pressed');
     key.keyElement.classList.add('guitar__key_active');
