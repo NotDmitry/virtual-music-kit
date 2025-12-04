@@ -1,13 +1,13 @@
 # Virtual Music Kit
 
-## [Original Task]()
+## [Original Task](https://github.com/rolling-scopes-school/tasks/tree/master/stage1/tasks/virtual-music-kit)
 
 ## Description
 
 The Virtual Music Kit is an interactive sound application inspired by a real musical instrument (guitar).
 Users are able to play sounds live (by clicking visual elements and/or by pressing assigned keyboard keys), or reproduce a sequence of available sounds of their choice.
 
-## Topics covered
+## Key skills
 
 - DOM manipulation
 - Event handling
